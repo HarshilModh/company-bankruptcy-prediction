@@ -26,36 +26,22 @@ For each cluster (except Subgroup 1), customized stacking classifiers are traine
 
 ---
 
-## 👥 Subgroup Ownership & Team Assignments
-
-The work of optimizing classifiers for each subgroup was divided among the project group members:
-
-* **Siddharthraju Vysyaraju**: Subgroup 0 & Subgroup 2
-* **Naman Manishbhai Parmar**: Subgroup 3 & Subgroup 6
-* **Harshil Chetankumar Modh**: Subgroup 4 & Subgroup 5
-* **Siyan Wen**: Subgroup 7 & Subgroup 8
-* **Subgroup 1**: Handled via baseline heuristic (0 bankruptcies in training).
-
----
-
 ## 📁 Repository Structure
 
 ```bash
 ├── 3_Generalization.ipynb        # Generalization test-set prediction pipeline
 ├── 3_TrainingData.ipynb          # Feature engineering, clustering, and training pipeline
 ├── 3_Generalization.csv          # Generated bankruptcy predictions on test data
-├── 3_Generalization.csv          # Underlying feature dataset (Generalization)
-├── 3_CS559_WS1_Results.docx      # Project documentation and results report
 │
 # Subgroup-Specific Jupyter Notebooks
-├── Siddharthraju_vysyaraju_Subgroup0.ipynb
-├── Siddharthraju_vysyaraju_Subgroup2.ipynb
-├── Naman_Manishbhai_Parmar_Subgroup3.ipynb
-├── Harshil_Chetankumar_Modh_Subgroup4.ipynb
-├── Harshil_Chetankumar_Modh_Subgroup5 .ipynb
-├── Naman_Manishbhai_Parmar_Subgroup6.ipynb
-├── Siyan_Wen_Subgroup7.ipynb
-├── Siyan_Wen_Subgroup8.ipynb
+├── Subgroup0.ipynb
+├── Subgroup2.ipynb
+├── Subgroup3.ipynb
+├── Subgroup4.ipynb
+├── Subgroup5.ipynb
+├── Subgroup6.ipynb
+├── Subgroup7.ipynb
+├── Subgroup8.ipynb
 │
 └── .gitignore                     # Git ignore file (excludes heavy video files/caches)
 ```
@@ -83,7 +69,7 @@ pip install pandas numpy scikit-learn joblib jupyter
    Open and run the cells in `3_TrainingData.ipynb` to execute the feature selection, generate the K-Means cluster labels, and export the clustering files.
    
 2. **Subgroup Optimization**:
-   Examine the individual subgroup notebooks (e.g., `Harshil_Chetankumar_Modh_Subgroup4.ipynb`) to see the custom models, hyperparameter tuning, and stacking classifier implementations for each subgroup.
+   Examine the individual subgroup notebooks (e.g., `Subgroup4.ipynb`) to see the custom models, hyperparameter tuning, and stacking classifier implementations for each subgroup.
 
 3. **Generalization (Inference)**:
    Run the `3_Generalization.ipynb` notebook to predict the bankruptcy status of companies in the test dataset. The notebook:
