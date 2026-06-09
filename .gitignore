@@ -1,0 +1,10 @@
+# Videos and media files
+Group3_video.mp4
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# OS generated files
+.DS_Store
