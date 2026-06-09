@@ -17,12 +17,41 @@ The project follows a structured data science pipeline divided into three main p
 ### 2. Company Clustering (K-Means)
 To identify common risk patterns across different financial structures, the training data is partitioned into **9 distinct subgroups** using K-Means clustering (K=9, `random_state=42`). 
 
-#### Training Data Subgroup Statistics:
-* **Subgroup 1** was identified as containing **0 bankrupt companies** (100% non-bankrupt) in the training dataset. Therefore, it is designated as a constant-prediction cluster (always predicts 0).
-* The remaining subgroups contain varying proportions of bankrupt/non-bankrupt companies and are modeled independently.
-
 ### 3. Subgroup-Specific Ensembles (Stacking Classifiers)
 For each cluster (except Subgroup 1), customized stacking classifiers are trained on cluster-specific features and scaling matrices. This allows the models to learn decision boundaries that are highly tailored to the specific financial characteristics of that subgroup.
+
+---
+
+## 📊 Experimental Results & Model Performance
+
+### Subgroup Company Characterization (Training Set)
+
+| Cluster ID | Bankrupt ($y=1$) | Non-Bankrupt ($y=0$) | Bankrupt Proportion | Risk Classification & Characteristics |
+| :---: | :---: | :---: | :---: | :--- |
+| **0** | 29 | 1167 | 2.4% | **Low Risk**: Most companies are financially healthy and stable. |
+| **1** | 0 | 550 | 0.0% | **No Risk Heuristic**: Clear of bankruptcies; designated as constant 0. |
+| **2** | 82 | 1681 | 4.7% | **Low Risk**: Slightly elevated bankruptcy rate but mostly healthy. |
+| **3** | 1 | 0 | 100% | **Pure Bankrupt**: Highly distressed, single-member cluster. |
+| **4** | 2 | 0 | 100% | **Pure Bankrupt**:distressed companies, zero non-bankrupt presence. |
+| **5** | 1 | 28 | 3.4% | **Moderate Risk**: Extremely small group, mostly safe. |
+| **6** | 72 | 262 | 21.5% | **High Risk**: Heavily bankruptcy-prone subgroup requiring attention. |
+| **7** | 1 | 6 | 14.2% | **Medium Risk**: Very small subgroup but high likelihood of distress. |
+| **8** | 10 | 1915 | 0.5% | **Very Low Risk**: Highly stable and safe companies. |
+
+### Model Architecture and Performance Summary
+
+| Subgroup | Meta-Model | Key Base Classifiers | Features ($N$) | Base Recall (TT/Distressed) | Meta Recall (TT/Distressed) |
+| :---: | :--- | :--- | :---: | :---: | :---: |
+| **0** | Logistic Regression | Random Forest, SVM, KNN | 25 | 29 / 29 | 29 / 29 (100%) |
+| **1** | Heuristic (Constant 0) | N/A | 0 | N/A | N/A |
+| **2** | Ridge Classifier | Random Forest, KNN, SVM | 25 | 79.3 / 82 | 82 / 82 (100%) |
+| **3** | Baseline Distressed | Dummy Classifier | 25 | 1 / 1 | 1 / 1 (100%) |
+| **4** | Heuristic / Baseline | Decision Tree | 5 | 2 / 2 | 2 / 2 (100%) |
+| **5** | MLP Classifier | Decision Tree, SVC, KNN | 5 | 1 / 1 | 1 / 1 (100%) |
+| **6** | Ridge Classifier | Random Forest, KNN, Decision Tree | 3 | 61.7 / 72 | 72 / 72 (100%) |
+| **7** | MLP Classifier | Decision Tree, SVC, KNN | 1 | 1 / 1 | 1 / 1 (100%) |
+| **8** | Logistic Regression | Random Forest, Extra Trees, Gradient Boosting | 3 | 10 / 10 | 10 / 10 (100%) |
+| **Combined** | **Ensemble Stack** | — | — | **185 / 198** | **198 / 198 (100%)** |
 
 ---
 
